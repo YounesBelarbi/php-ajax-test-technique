@@ -8,6 +8,10 @@ use App\Models\WorksiteModel;
 class MainController
 {
 
+    /**
+     *
+     * @return void
+     */
     public function index()
     {
         $serviceModel = new ServiceModel();
@@ -38,6 +42,12 @@ class MainController
         ]);
     }
 
+    /**
+     *
+     * @param string $viewName
+     * @param array $parameters
+     * @return void
+     */
     public function render($viewName, $parameters = [])
     {
         require('src/Views/' . $viewName . '.tpl.php');

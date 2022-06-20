@@ -8,6 +8,10 @@ use App\Models\ServiceWorksiteMonthsModel;
 
 class ApiController
 {
+    /**
+     *
+     * @return string json
+     */
     public function filter()
     {
         $serviceModel = new ServiceModel();
@@ -33,6 +37,10 @@ class ApiController
         echo json_encode($worksiteAndServiceValues);
     }
 
+    /**
+     *
+     * @return string json
+     */
     public function delete()
     {
         $serviceWorksiteMonthsModel = new ServiceWorksiteMonthsModel();

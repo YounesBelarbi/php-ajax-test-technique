@@ -33,4 +33,10 @@ class DbModel extends Db
         );
         return $query->fetchAll();
     }
+
+    public function find()
+    {
+        $query = $this->sqlRequest("SELECT * FROM " . $this->table);
+        return $query->fetchAll(PDO::FETCH_KEY_PAIR);
+    }
 }

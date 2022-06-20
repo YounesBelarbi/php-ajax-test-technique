@@ -13,6 +13,7 @@
 </head>
 
 <body>
+    <?php dump($parameters); ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12">
@@ -25,8 +26,9 @@
         <div class="col-xs-4">
             <select class="form-control">
                 <option>Tous</option>
-                <option>AM PRODUCTION</option>
-                <option>ADOMOS</option>
+                <?php foreach ($parameters['allWorksiteExist'] as $worksite) : ?>
+                    <option> <?= $worksite ?> </option>
+                <?php endforeach; ?>
             </select>
         </div>
         <div class="col-xs-2">
@@ -35,8 +37,9 @@
         <div class="col-xs-4">
             <select class="form-control">
                 <option>Toutes</option>
-                <option>Vitrerie</option>
-                <option>Remise en état mensuelle</option>
+                <?php foreach ($parameters['allServiceExist'] as $service) : ?>
+                    <option><?= $service ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
         <table class="table table-striped table-responsive table-long">
@@ -64,109 +67,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr style="font-style:normal">
-                    <td></td>
-                    <td>AM PRODUCTION (AMP0301)</td>
-                    <td>Vitrerie</td>
-                    <td>21.67</td>
-                    <td>21.67</td>
-                    <td>21.67</td>
-                    <td>21.67</td>
-                    <td>21.67</td>
-                    <td>21.67</td>
-                    <td>21.67</td>
-                    <td>21.67</td>
-                    <td>21.67</td>
-                    <td>21.67</td>
-                    <td>21.67</td>
-                    <td>21.67</td>
-                    <td>260,04</td>
-                    <td>
-                        <a href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-                <tr style="font-style:normal">
-                    <td></td>
-                    <td>AM PRODUCTION (AMP0301)</td>
-                    <td>Remise en état mensuelle</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>36,00</td>
-                    <td>
-                        <a href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-                <tr style="font-style:normal">
-                    <td></td>
-                    <td>ADOMOS (ADM0101)</td>
-                    <td>Vitrerie</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>36,00</td>
-                    <td>
-                        <a href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-                <tr style="font-style:normal">
-                    <td></td>
-                    <td>ADOMOS (ADM0101)</td>
-                    <td>Remise en état mensuelle</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>3</td>
-                    <td>36,00</td>
-                    <td>
-                        <a href="#" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><b>TOTAL Heures</b></td>
-                    <td></td>
-                    <td><b>30.67</b></td>
-                    <td><b>30.67</b></td>
-                    <td><b>30.67</b></td>
-                    <td><b>30.67</b></td>
-                    <td><b>30.67</b></td>
-                    <td><b>30.67</b></td>
-                    <td><b>30.67</b></td>
-                    <td><b>30.67</b></td>
-                    <td><b>30.67</b></td>
-                    <td><b>30.67</b></td>
-                    <td><b>30.67</b></td>
-                    <td><b>30.67</b></td>
-                    <td><b>368.04</b></td>
-                    <td></td>
-                </tr>
+                <?php foreach ($parameters['worksiteAndServiceValues'] as $item) : ?>
+                    <tr style="font-style:normal">
+                        <td></td>
+                        <td><?= $item['worksiteName'] ?></td>
+                        <td><?= $item['serviceName'] ?></td>
+                        <?php foreach ($item['months_list'] as $month) : ?>
+
+                            <td><?= $month ?></td>
+
+                        <?php endforeach; ?>
+                        <td>
+                            <a href="#" class="btn btn-xs btn-danger delete-button" data-idList=<?= json_encode($item['idList']); ?>><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
@@ -188,15 +103,17 @@
                                             <label for="" class="col-sm-1">Chantier</label>
                                             <div class="col-sm-4" id="select_chantier_container">
                                                 <select class="form-control input-sm" name="heure_chantier" id="heure_chantier" type="text">
-                                                    <option>AM PRODUCTION</option>
-                                                    <option>ADOMOS</option>
+                                                    <?php foreach ($parameters['allWorksiteExist'] as $key => $worksite) : ?>
+                                                        <option data-id=<?= $key ?>> <?= $worksite ?> </option>
+                                                    <?php endforeach; ?>
                                                 </select>
                                             </div>
                                             <label for="" class="col-sm-1">Prestation</label>
                                             <div class="col-sm-4" id="select_chantier_container">
                                                 <select class="form-control input-sm" name="heure_chantier" id="heure_chantier" type="text">
-                                                    <option>Vitrerie</option>
-                                                    <option>Remise en état mensuelle</option>
+                                                    <?php foreach ($parameters['allServiceExist'] as $key => $service) : ?>
+                                                        <option data-id=<?= $key ?>><?= $service ?></option>
+                                                    <?php endforeach; ?>
                                                 </select>
                                             </div>
                                         </div>
@@ -269,6 +186,8 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="../../assets/js/script.js"></script>
 </body>
 
 </html>

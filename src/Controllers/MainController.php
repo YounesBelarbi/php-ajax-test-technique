@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ServiceModel;
+use App\Models\WorksiteModel;
 
 class MainController
 {
@@ -10,8 +11,10 @@ class MainController
     public function index()
     {
         $serviceModel = new ServiceModel();
+        $worksiteModel = new WorksiteModel();
 
-        $dataFromDb = [];
+
+        $worksiteAndServiceValues = [];
         foreach ($serviceModel->findAll() as $item) {
             $item['months_list'] = unserialize($item['months_list']);
             $item['idList']['service_id'] = $item['serviceId'];
@@ -22,9 +25,17 @@ class MainController
             unset($item['worksiteId']);
             unset($item['monthListId']);
 
-            $dataFromDb[] = $item;
+            $worksiteAndServiceValues[] = $item;
         }
-        $this->render('home', ['dataFromDb' => $dataFromDb]);
+
+        $allServiceExist = $serviceModel->find();
+        $allWorksiteExist = $worksiteModel->find();
+
+        $this->render('home', [
+            'worksiteAndServiceValues' => $worksiteAndServiceValues,
+            'allServiceExist' => $allServiceExist,
+            'allWorksiteExist' => $allWorksiteExist
+        ]);
     }
 
     public function render($viewName, $parameters = [])

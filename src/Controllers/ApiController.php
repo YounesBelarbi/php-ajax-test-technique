@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\ServiceModel;
+use App\Models\ServiceWorksiteMonthsModel;
 
 
 class ApiController
@@ -30,5 +31,12 @@ class ApiController
             $worksiteAndServiceValues[] = $item;
         }
         echo json_encode($worksiteAndServiceValues);
+    }
+
+    public function delete()
+    {
+        $serviceWorksiteMonthsModel = new ServiceWorksiteMonthsModel();
+        $result = $serviceWorksiteMonthsModel->delete($_POST);
+        echo json_encode(['message' => 'supprimé avec succès']);
     }
 }

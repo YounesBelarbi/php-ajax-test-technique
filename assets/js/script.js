@@ -1,6 +1,7 @@
 const app = {
     init: () => {
         $('.filter').change(app.handleFilterChange);
+        $('.delete-button').click(app.handleDelete)
     },
     handleFilterChange: () => {
         const filterData = {};
@@ -36,6 +37,22 @@ const app = {
                     $("tbody").append(tr);
                 })
 
+            })
+            .catch(function (error) {
+                console.log('error=>', error.responseText);
+            });
+    },
+    handleDelete: (e) => {
+        let buttonWasClicked = e.target;
+        let data = $(buttonWasClicked).data('idlist');
+        $.ajax({
+            method: "POST",
+            url: "http://localhost:8000/api/delete",
+            data: data,
+            dataType: "json",
+        })
+            .then(function (response) {
+                $(buttonWasClicked).closest('tr').remove()
             })
             .catch(function (error) {
                 console.log('error=>', error.responseText);

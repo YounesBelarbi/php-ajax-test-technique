@@ -59,4 +59,19 @@ class DbModel extends Db
 
         return $query->fetchAll();
     }
+
+    public function delete(array $criteria)
+    {
+        $fields = [];
+        $values = [];
+
+        foreach ($criteria  as $field => $value) {
+            $fields[] = "$field = ?";
+            $values[] = $value;
+        }
+
+        $fieldList = implode(' AND ', $fields);
+        $query = $this->sqlRequest("DELETE FROM $this->table WHERE $fieldList", $values);
+        return $query->fetchAll();
+    }
 }

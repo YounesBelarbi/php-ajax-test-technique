@@ -11,6 +11,7 @@ $router = new AltoRouter;
 
 $router->map('GET', '/', ['controller' => 'App\Controllers\MainController', 'method' => 'index'], 'home');
 $router->map('GET', '/api/filter', ['controller' => 'App\Controllers\ApiController', 'method' => 'filter'], 'api_filter');
+$router->map('POST', '/api/delete', ['controller' => 'App\Controllers\ApiController', 'method' => 'delete'], 'api_delete');
 
 
 $match = $router->match();

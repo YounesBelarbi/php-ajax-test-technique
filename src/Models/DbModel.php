@@ -39,4 +39,24 @@ class DbModel extends Db
         $query = $this->sqlRequest("SELECT * FROM " . $this->table);
         return $query->fetchAll(PDO::FETCH_KEY_PAIR);
     }
+
+    public function findBy(array $criteria)
+    {
+        $fields = [];
+        $values = [];
+
+        foreach ($criteria  as $field => $value) {
+            $fields[] = "$field.name = ?";
+            $values[] = $value;
+        }
+
+        $fieldList = implode(' AND ', $fields);
+        $query = $this->sqlRequest("SELECT service.name as serviceName, worksite.name as worksiteName, month_values.months_list 
+        FROM `service` INNER JOIN service_worksite_months ON service.id=service_id 
+        INNER JOIN worksite ON worksite_id=worksite.id 
+        INNER JOIN month_values ON months_id=month_values.id 
+        WHERE $fieldList", $values);
+
+        return $query->fetchAll();
+    }
 }

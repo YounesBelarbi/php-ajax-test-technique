@@ -13,7 +13,6 @@
 </head>
 
 <body>
-    <?php dump($parameters); ?>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12">
@@ -24,7 +23,7 @@
             Filtre Chantier :
         </div>
         <div class="col-xs-4">
-            <select class="form-control">
+            <select class="form-control filter" name="worksite">
                 <option>Tous</option>
                 <?php foreach ($parameters['allWorksiteExist'] as $worksite) : ?>
                     <option> <?= $worksite ?> </option>
@@ -35,7 +34,7 @@
             Filtre Prestation :
         </div>
         <div class="col-xs-4">
-            <select class="form-control">
+            <select class="form-control filter" name="service">
                 <option>Toutes</option>
                 <?php foreach ($parameters['allServiceExist'] as $service) : ?>
                     <option><?= $service ?></option>

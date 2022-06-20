@@ -14,6 +14,11 @@ class DbModel extends Db
 
     private $db;
 
+    /**
+     * @param string $sql
+     * @param array|null $attributs
+     * @return query
+     */
     public function sqlRequest(string $sql, array $attributs = null)
     {
         $this->db = Db::getInstance();
@@ -23,6 +28,9 @@ class DbModel extends Db
         return $query;
     }
 
+    /**
+     * @return query
+     */
     public function findAll()
     {
         $query = $this->sqlRequest(
@@ -34,12 +42,19 @@ class DbModel extends Db
         return $query->fetchAll();
     }
 
+    /**
+     * @return query
+     */
     public function find()
     {
         $query = $this->sqlRequest("SELECT * FROM " . $this->table);
         return $query->fetchAll(PDO::FETCH_KEY_PAIR);
     }
 
+    /**
+     * @param array $criteria
+     * @return query
+     */
     public function findBy(array $criteria)
     {
         $fields = [];
@@ -60,6 +75,10 @@ class DbModel extends Db
         return $query->fetchAll();
     }
 
+    /**
+     * @param array $criteria
+     * @return query
+     */
     public function delete(array $criteria)
     {
         $fields = [];
